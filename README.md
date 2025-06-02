@@ -1,5 +1,6 @@
 JustWatch TV is personalized and easy way of experiencing youtube with the content you like.
-URL: https://justwatchtv.vercel.app
+
+Deployed URL: https://justwatchtv.vercel.app
 
 ## Getting Started
 
