@@ -64,6 +64,7 @@ export default function ContextProvider({ children }: { children: React.ReactNod
           setSearchSuggestions([]);
           homePageRef?.current?.focus();
           setError("");
+          setIsVideoPlayerOpen(false); // Hiding video player when new data is loaded
         } else {
           toast.error("No data found for the given query.");
         }
