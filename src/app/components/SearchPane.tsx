@@ -22,7 +22,7 @@ export default function SearchPane() {
 
   return (
     <div className="fixed mt-12 top-0 p-4 bg-black shadow-md rounded-lg
-      xl:left-[32%] w-full xl:w-[534px]"
+      xl:left-[31%] w-full max-h-full xl:w-[564px] overflow-y-scroll"
     >
       {searchSuggestions.map((item, index) => (
         <div

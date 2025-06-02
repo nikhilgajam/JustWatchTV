@@ -53,6 +53,7 @@ export default function ContextProvider({ children }: { children: React.ReactNod
   const fetchData = async (query: string) => {
     try {
       setData(() => []);
+      setIsVideoPlayerOpen(false); // Hiding video player when new data is loading
       setLoading(true);
       try {
         const response = await getSearchData(query);
@@ -64,7 +65,6 @@ export default function ContextProvider({ children }: { children: React.ReactNod
           setSearchSuggestions([]);
           homePageRef?.current?.focus();
           setError("");
-          setIsVideoPlayerOpen(false); // Hiding video player when new data is loaded
         } else {
           toast.error("No data found for the given query.");
         }
