@@ -4,7 +4,9 @@ This is a simple yet powerful way of content consumption.
 
 
 Deployement URLs:
+
 https://justwatchtv.vercel.app
+
 https://just-watch-tv.vercel.app
 
 ## Getting Started
