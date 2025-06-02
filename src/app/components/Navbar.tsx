@@ -145,7 +145,7 @@ export default function Navbar() {
       </div>
 
       {/* Search Bar */}
-      <div className="flex w-[42%]">
+      <div className="flex w-[45%]">
         <input
           ref={searchInputRef}
           className="rounded-l-full px-4 py-2 w-[100%] h-[100%] text-base

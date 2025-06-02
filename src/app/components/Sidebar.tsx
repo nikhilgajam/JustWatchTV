@@ -11,7 +11,7 @@ import localStoreApi from "@/utils/localStorageApi";
 import toast from "react-hot-toast";
 
 export default function Sidebar() {
-  const { setSearchQuery, setTriggerSearch } = useContextData();
+  const { setSearchQuery, setTriggerSearch, setIsSidebarOpen } = useContextData();
   const [quickSearchData, setQuickSearchData] = useState(localStoreApi.getQuickSearch());
 
   const settingsList = [
@@ -50,6 +50,7 @@ export default function Sidebar() {
   const handleQuickSearchClick = (value: string) => {
     setSearchQuery(value);
     setTriggerSearch(true);
+    setIsSidebarOpen(false); // Close sidebar after click
   };
 
   const handleDefaultSearchChange = (oldValue: string, newValue: string) => {

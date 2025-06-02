@@ -90,7 +90,7 @@ export default function Home() {
   return (
     <div className="flex flex-col h-screen items-center overflow-x-hidden overflow-y-hidden">
       <div
-        className="mt-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4
+        className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4
         gap-4 p-5 overflow-y-scroll overflow-x-hidden h-full"
         ref={homePageRef}
       >
