@@ -125,7 +125,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className="fixed w-full flex flex-row bg-gray-900 px-4 py-1 justify-between items-center">
+    <header className="fixed w-full flex flex-row bg-gray-900 px-4 py-1 justify-between items-center z-[9999]">
       {/* Logo Section */}
       <div className="flex">
         {/* Hamburger Button */}

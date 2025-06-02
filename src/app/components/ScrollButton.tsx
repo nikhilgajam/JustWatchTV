@@ -55,7 +55,7 @@ const ScrollButton = () => {
         :
         <FaCheckCircle
           onClick={scrollToVideo}
-          title="Scroll To Video"
+          title="Scroll To Selected Video"
         />
       }
     </div>

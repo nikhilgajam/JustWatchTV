@@ -3,8 +3,6 @@ import { useContextData } from "../context/Context";
 import { IoIosSearch } from "react-icons/io";
 
 export default function SearchPane() {
-  console.log("SearchPane rendered");
-
   const {
     searchSuggestions,
     setTriggerSearch,
