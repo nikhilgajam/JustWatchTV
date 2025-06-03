@@ -14,7 +14,7 @@ export default function SidebarItem({
 }
 ) {
   return (
-    <div className="flex justify-between space-x-4 hover:bg-gray-600 duration-300 rounded-xl p-2 pr-0 cursor-pointer">
+    <div className="flex justify-between space-x-4 hover:bg-gray-600 duration-300 rounded-xl p-2 pr-0 cursor-default">
       <div className="flex">
         <div className="flex text-xl">
           {icon}

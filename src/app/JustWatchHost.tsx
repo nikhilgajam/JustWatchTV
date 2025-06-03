@@ -8,14 +8,17 @@ export default function JustWatchHost() {
   return (
     <>
       {/* Toaster Displays The Popups */}
-      <Toaster
-        toastOptions={{
-          style: {
-            background: "#333", // Dark background
-            color: "#fff", // White text
-          },
-        }}
-      />
+      <div className="z-[9999]"> {/* z-index defines the order of overlapping */}
+        <Toaster
+          toastOptions={{
+            style: {
+              background: "#333", // Dark background
+              color: "#fff", // White text
+            },
+          }}
+        />
+      </div>
+      
       {/* Components To Load On Screen */}
       <Navbar />
       <Home />

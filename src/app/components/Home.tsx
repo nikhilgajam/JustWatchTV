@@ -33,9 +33,9 @@ export default function Home() {
 
     const scrollPosition = container.scrollTop + container.clientHeight;
     const scrollHeight = container.scrollHeight;
-    const isAtBottom = scrollHeight - scrollPosition === 0;
+    const isAtBottom = scrollHeight - scrollPosition <= 1; // Small Threshold 1
 
-    if (isAtBottom) {
+    if (isAtBottom !== isBottom) {
       setIsBottom(true);
     }
   };

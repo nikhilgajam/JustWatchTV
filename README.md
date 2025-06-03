@@ -1,4 +1,6 @@
-JustWatch TV is personalized and easy way of experiencing youtube with no distractions.
+# JustWatchTV
+
+JustWatchTV is personalized and easy way of experiencing youtube with no distractions.
 
 This is a simple yet powerful way of content consumption.
 

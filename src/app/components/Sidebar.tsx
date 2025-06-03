@@ -96,6 +96,7 @@ export default function Sidebar() {
           text={localStoreApi.getDefaultSearchString()}
           onChange={handleDefaultSearchChange}
           isDeleteEnabled={false}
+          onClick={() => handleQuickSearchClick(localStoreApi.getDefaultSearchString())}
         />
         <br />
         <hr />

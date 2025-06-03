@@ -46,7 +46,7 @@ const ScrollButton = () => {
 
   return (
     <div className="button scroll-button text-4xl text-white fixed bottom-6 right-6 cursor-pointer
-    hover:text-gray-400 transition-all duration-300 z-50">
+    hover:text-blue-400 transition-all duration-300 z-50">
       {isUp ?
         <FaArrowCircleUp
           onClick={scrollToTop}
