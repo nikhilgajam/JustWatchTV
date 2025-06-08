@@ -77,7 +77,7 @@ export default function Home() {
     if (data?.nextPage?.nextPageToken) {
       handleLazyLoading();
     }
-  }, [isBottom]);
+  }, [isBottom, loading]);
 
   useEffect(() => {
     const container = homePageRef.current;
