@@ -45,6 +45,17 @@ export default function SidebarInputItem({
     }
   };
 
+  const onClickHandler = () => {
+    if (isEditing) {
+        // If editing mode is on then the click should be dismissed
+        return;
+    }
+
+    if (onClick) {
+        onClick();
+    }
+  }
+
   useEffect(() => {
     if (isEditing && inputRef.current) {
       inputRef.current.focus();
@@ -70,7 +81,7 @@ export default function SidebarInputItem({
     <div
       className="flex justify-between space-x-4 hover:bg-gray-600 duration-300 rounded-xl p-2 cursor-pointer"
     >
-      <div className="flex flex-grow items-center" onClick={onClick}>
+      <div className="flex flex-grow items-center" onClick={onClickHandler}>
         <div className="flex text-xl">
           {icon}
         </div>
