@@ -6,12 +6,12 @@ This is a simple yet powerful way of content consumption.
 ```
 
 ## Features:
-- Quick Search queries can be added to Local Storage.
-- Default Load Screen can be updated.
-- Previously Watched list which will get updated till 10 videos with saved watching time.
-- Button To Scroll from selected video to player and vice versa.
+- Quick search queries can be added to local storage.
+- Default load Screen can be updated.
+- Previously watched list will get updated to local storage till 10 videos with saved watching time.
+- Button to scroll from selected video to video player and vice versa.
 - Lazy loaded data when scrolled to the bottom of the page.
-- Search Suggestions available.
+- Search suggestions available.
 
 
 ## Deployment URL's:
