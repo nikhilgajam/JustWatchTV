@@ -5,6 +5,15 @@ JustWatchTV is personalized and easy way of experiencing youtube with no distrac
 This is a simple yet powerful way of content consumption.
 ```
 
+## Features:
+- Quick Search queries can be added to Local Storage.
+- Default Load Screen can be updated.
+- Previously Watched list which will get updated till 10 videos with saved watching time.
+- Button To Scroll from selected video to player and vice versa.
+- Lazy loaded data when scrolled to the bottom of the page.
+- Search Suggestions available.
+
+
 ## Deployment URL's:
 - https://justwatchtv.vercel.app
 - https://just-watch-tv.vercel.app
