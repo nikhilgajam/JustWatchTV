@@ -21,9 +21,11 @@ This is a simple yet powerful way of content consumption.
 - As layer consists following API endpoints.
 
 ### Routes:
-- /api/search?query=string        (GET)    Retrieves the search results.
-- /api/search-next-page           (POST)   Retrieves the more data with the search context.
-- /api/suggestions?query=string   (GET)    Retrieves search suggestions list.
+```
+/api/search?query=string        (GET)    Retrieves the search results.
+/api/search-next-page           (POST)   Retrieves the more data with the search context.
+/api/suggestions?query=string   (GET)    Retrieves search suggestions list.
+```
 
 
 ## Running In Local
