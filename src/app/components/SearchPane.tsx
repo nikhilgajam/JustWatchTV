@@ -13,7 +13,7 @@ export default function SearchPane() {
   const handleClick = (query: string) => {
     setSearchSuggestions([]); // Clear suggestions after selection
     if (query) {
-      setSearchQuery(query); // Set the search query in context
+      setSearchQuery(convertToPlainText(query)); // Set the plain text search query to the context
       setTriggerSearch(true); // Trigger the search
     }
   };
