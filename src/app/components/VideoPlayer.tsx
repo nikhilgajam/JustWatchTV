@@ -38,7 +38,7 @@ export default function VideoPlayer() {
         playingTime: playerRef.current?.getCurrentTime() || 0,
       });
     }
-  }, []);
+  }, [selectedVideo]);
 
   return (
     <div className="flex flex-col w-full h-full justify-center items-center bg-black p-4 rounded-xl shadow-gray-700 shadow-md">
