@@ -22,7 +22,7 @@ export default function VideoPlayer() {
     }
     // Save video progress to Local Storage before the window is closed or refreshed
     window.addEventListener("beforeunload", handleBeforeUnload);
-    
+
     // Clean up
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
@@ -67,6 +67,13 @@ export default function VideoPlayer() {
             const nextVideoId = data?.items[currentIndex + 1]?.id;
             setSelectedVideo({
               id: nextVideoId,
+            });
+
+            // Save the next selected video data to the local storage
+            localStoreApi.addPreviouslyWatchedData({
+              id: nextVideoId,
+              title: data?.items[currentIndex + 1]?.title,
+              playingTime: 0,
             });
           }
         }}
