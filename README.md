@@ -1,9 +1,9 @@
 # JustWatchTV
 
+```
 JustWatchTV is personalized and easy way of experiencing youtube with no distractions.
-
 This is a simple yet powerful way of content consumption.
-
+```
 
 ## Deployment URL's:
 - https://justwatchtv.vercel.app
@@ -15,7 +15,6 @@ This is a simple yet powerful way of content consumption.
 - If any other endpoint is hit other than the root and api then the view is redirected to root.
 - Implemented using NextJS.
 
-
 ## Backend For Frontend (BFF) API:
 - This layer consists of API's which combines other API's to provide seamless response.
 - As layer consists following API endpoints.
@@ -26,7 +25,6 @@ This is a simple yet powerful way of content consumption.
 /api/search-next-page           (POST)   Retrieves the more data with the search context.
 /api/suggestions?query=string   (GET)    Retrieves search suggestions list.
 ```
-
 
 ## Running In Local
 
