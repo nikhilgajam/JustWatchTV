@@ -6,7 +6,6 @@ import { MdOutlineMenu } from "react-icons/md";
 import { IoIosSearch } from "react-icons/io";
 import { PiVideoDuotone } from "react-icons/pi";
 import { useContextData } from "../context/Context";
-import Image from "next/image";
 import toast from "react-hot-toast";
 import localStoreApi from "@/utils/localStorageApi";
 
@@ -71,12 +70,20 @@ export default function Navbar() {
 
   const handlePlayerToggle = () => {
     if (setIsVideoPlayerOpen) {
+      const selectedVideoData = {
+        id: selectedVideo.id || "",
+        title: selectedVideo.title || "",
+        playingTime: playerRef.current?.getCurrentTime() || 0,
+      }
+
       // If the video player is being opened, set the selected video with the current playing time
       if (isVideoPlayerOpen) {
-        setSelectedVideo({
-          id: selectedVideo?.id || "",
-          playingTime: playerRef.current?.getCurrentTime() || 0,
-        });
+        setSelectedVideo(selectedVideoData);
+
+        // Save the last seen video to local storage
+        if (selectedVideo?.id && selectedVideo?.title) {
+          localStoreApi.addPreviouslyWatchedData(selectedVideoData);
+        }
       }
 
       setIsVideoPlayerOpen(!isVideoPlayerOpen);
@@ -140,7 +147,7 @@ export default function Navbar() {
           className="ml-2 cursor-pointer hover:opacity-60 transition-opacity duration-300"
           onClick={() => window.location.reload()}
         >
-          <Image src="/tv.png" alt="JustWatch TV Logo" title="JustWatch TV" width={40} height={40} layout="intrinsic" />
+          <img src="/tv.png" alt="JustWatch TV Logo" title="JustWatch TV" width={40} />
         </button>
       </div>
 
@@ -151,7 +158,7 @@ export default function Navbar() {
           className="rounded-l-full px-4 py-2 w-[100%] h-[100%] text-base
             hover:bg-gray-800 transition-colors duration-300
             bg-black border
-            border-gray-400 border-r-0 outline-none"
+            border-gray-400 border-r-0 outline-none "
           placeholder="Search"
           type="text"
           onChange={(event) => handleSearch(event, false)}

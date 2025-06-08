@@ -20,6 +20,7 @@ export default function Home() {
     loading,
     setLoading,
     isVideoPlayerOpen,
+    searchQuery,
     homePageRef,
     isSidebarOpen,
     setIsSidebarOpen,
@@ -33,7 +34,7 @@ export default function Home() {
 
     const scrollPosition = container.scrollTop + container.clientHeight;
     const scrollHeight = container.scrollHeight;
-    const isAtBottom = scrollHeight - scrollPosition <= 1; // Small Threshold 1
+    const isAtBottom = scrollHeight - scrollPosition <= 1; // Small Threshold
 
     if (isAtBottom !== isBottom) {
       setIsBottom(true);
@@ -70,8 +71,8 @@ export default function Home() {
   }, [data]);
 
   useEffect(() => {
-    // No need to load more if already loading or not at the bottom
-    if (!isBottom || loading) return;
+    // No need to load more if not at the bottom or already loading or error occured
+    if (!isBottom || loading || error) return;
 
     if (data?.nextPage?.nextPageToken) {
       handleLazyLoading();
@@ -107,6 +108,13 @@ export default function Home() {
           video?.id && video?.type === "video" && <VideoCard key={video.id} videoData={video} />
         ))}
 
+        {/* Welcome Text */}
+        {loading && !searchQuery && !data?.items?.length && (
+          <div className="col-span-full flex justify-center items-center text-xl md:text-4xl">
+            <h1>Welcome to the JustWatchTV</h1>
+          </div>
+        )}
+
         {/* Loading Indicator */}
         {loading &&
           <div className="col-span-full flex justify-center items-center mt-12 mb-12">
@@ -115,7 +123,7 @@ export default function Home() {
         }
 
         {/* Scroll To Top And Video Toggle Button */}
-        {!loading && <ScrollButton />}
+        {(data?.items?.length > 0) && <ScrollButton />}
 
         {/* Error Display */}
         {error &&

@@ -18,19 +18,25 @@ export default function SearchPane() {
     }
   };
 
+  const convertToPlainText = (text: string): string => {
+    return JSON.parse(`"${text}"`);
+  };
+
   return (
-    <div className="fixed mt-12 top-0 p-4 bg-black shadow-md rounded-lg
-      w-full max-h-full xl:w-[40%] overflow-y-scroll"
+    <div
+      className="fixed mt-12 top-0 p-4 pb-12 bg-black shadow-md rounded-lg
+      w-full max-h-full xl:w-[40%] space-y-1 outline-none overflow-y-scroll"
     >
-      {searchSuggestions.map((item, index) => (
-        <div
+      {(searchSuggestions).map((item, index) => (
+        <button
           key={index}
-          className="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-md cursor-pointer"
+          className="w-full flex items-center space-x-2 p-2 outline-none
+          hover:bg-gray-700 focus:bg-gray-700 rounded-md cursor-pointer"
           onClick={() => handleClick(item)}
         >
           <IoIosSearch />
-          <span className="ml-2">{item}</span>
-        </div>
+          <span className="ml-2">{convertToPlainText(item)}</span>
+        </button>
       ))}
     </div>
   );

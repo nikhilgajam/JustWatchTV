@@ -3,7 +3,8 @@ const initialLocalStorageData = {
   searchSuggestion: true,
   autoPlay: true,
   defaultSearchString: "Trending Scientific Documentaries",
-  quickSearch: [ "Ben 10", "Tom And Jerry Tales" ],
+  quickSearch: ["Ben 10", "Tom And Jerry Tales"],
+  previouslyWatchedData: []
 };
 
 
@@ -39,7 +40,7 @@ const localStoreApi = {
   },
   toggleAutoPlay() {
     const dataObj = this.getStorageData();
-    this.setStorageData({ ...dataObj, autoPlay: !dataObj.autoPlay});
+    this.setStorageData({ ...dataObj, autoPlay: !dataObj.autoPlay });
   },
 
   // These functions will return and set the Default Search String in Local Storage.
@@ -49,7 +50,7 @@ const localStoreApi = {
   },
   setDefaultSearchString(value: string) {
     const dataObj = this.getStorageData();
-    this.setStorageData({ ...dataObj, defaultSearchString: value});
+    this.setStorageData({ ...dataObj, defaultSearchString: value });
   },
 
   // These functions will return, set and modify the Quick Storage in Local Storage.
@@ -86,6 +87,41 @@ const localStoreApi = {
       quickSearch[index] = newData
       this.setStorageData({ ...dataObj, quickSearch })
     }
+  },
+
+  // These functions will return and add the Last Seen Videos in Local Storage.
+  getPreviouslyWatchedData() {
+    const dataObj = this.getStorageData();
+    return dataObj.previouslyWatchedData;
+  },
+  addPreviouslyWatchedData(video: any) {
+    if (!video || !video.id) return; // Ensure video has an id
+
+    const dataObj = this.getStorageData();
+    let previouslyWatchedData = dataObj.previouslyWatchedData || [];
+
+    // Check if the video already exists in the previouslyWatchedData array
+    const videoExists = previouslyWatchedData.some((v: any) => v.id === video?.id);
+    if (videoExists) {
+      // If exists update the existing video
+      previouslyWatchedData = previouslyWatchedData.map((v: any) => {
+        if (v.id === video.id) {
+          return { ...v, playingTime: video.playingTime, title: video.title };
+        }
+        return v;
+      });
+    } else {
+      // Add the new video to the beginning of the array
+      previouslyWatchedData.unshift(video);
+
+      // Limit the array to the last 10 videos
+      if (previouslyWatchedData.length > 10) {
+        previouslyWatchedData.pop();
+      }
+    }
+
+    // Update the local storage with the new previouslyWatchedData array
+    this.setStorageData({ ...dataObj, previouslyWatchedData });
   },
 
   // This function will return the constant used for the Storage Event.

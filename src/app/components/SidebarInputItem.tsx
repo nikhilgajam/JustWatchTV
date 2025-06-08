@@ -6,6 +6,7 @@ import { IoIosSave } from "react-icons/io";
 export default function SidebarInputItem({
   icon,
   text,
+  isEditEnabled,
   isDeleteEnabled,
   onChange,
   onDelete,
@@ -13,6 +14,7 @@ export default function SidebarInputItem({
 }: {
   icon: any,
   text: string,
+  isEditEnabled: boolean
   isDeleteEnabled: boolean
   onChange?: (oldValue: string, newValue: string) => any
   onDelete?: (value: string) => any
@@ -84,7 +86,7 @@ export default function SidebarInputItem({
         />
       </div>
       <div className="flex items-start space-x-2">
-        {
+        {isEditEnabled &&
           <button title="Edit" onClick={handleEditClick}>
             {isEditing ?
               <IoIosSave className="hover:text-green-500 text-xl" />

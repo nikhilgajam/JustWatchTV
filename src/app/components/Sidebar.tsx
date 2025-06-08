@@ -4,6 +4,7 @@ import { IoPlayForward } from "react-icons/io5";
 import { TbReportSearch } from "react-icons/tb";
 import { MdSavedSearch } from "react-icons/md";
 import { LiaSearchPlusSolid } from "react-icons/lia";
+import { MdHistory } from "react-icons/md";
 import { useContextData } from "../context/Context";
 import SidebarSwitchItem from "./SidebarSwitchItem";
 import SidebarInputItem from "./SidebarInputItem";
@@ -11,8 +12,16 @@ import localStoreApi from "@/utils/localStorageApi";
 import toast from "react-hot-toast";
 
 export default function Sidebar() {
-  const { setSearchQuery, setTriggerSearch, setIsSidebarOpen } = useContextData();
+  const {
+    homePageRef,
+    setSearchQuery,
+    setTriggerSearch,
+    setIsSidebarOpen,
+    setSelectedVideo,
+    setIsVideoPlayerOpen,
+  } = useContextData();
   const [quickSearchData, setQuickSearchData] = useState(localStoreApi.getQuickSearch());
+  const [previouslyWatchedData] = useState(localStoreApi.getPreviouslyWatchedData());
 
   const settingsList = [
     {
@@ -50,7 +59,7 @@ export default function Sidebar() {
   const handleQuickSearchClick = (value: string) => {
     setSearchQuery(value);
     setTriggerSearch(true);
-    setIsSidebarOpen(false); // Close sidebar after click
+    setIsSidebarOpen(false); // Close sidebar after clicked
   };
 
   const handleDefaultSearchChange = (oldValue: string, newValue: string) => {
@@ -62,6 +71,13 @@ export default function Sidebar() {
     localStoreApi.setDefaultSearchString(newValue);
     toast.success("Default search string updated.");
   }
+
+  const handlePreviouslyWatchedClick = (data: any) => {
+    setSelectedVideo(data);
+    setIsVideoPlayerOpen?.(true); // Open video player
+    setIsSidebarOpen(false); // Close sidebar after clicked
+    homePageRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <div className={`mt-12 fixed top-0 left-0 h-[calc(100vh-3rem)] sm:w-[50%] md:w-[45%] xl:w-[29%] w-[100%]
@@ -95,6 +111,7 @@ export default function Sidebar() {
           icon={<TbReportSearch />}
           text={localStoreApi.getDefaultSearchString()}
           onChange={handleDefaultSearchChange}
+          isEditEnabled={true}
           isDeleteEnabled={false}
           onClick={() => handleQuickSearchClick(localStoreApi.getDefaultSearchString())}
         />
@@ -112,6 +129,7 @@ export default function Sidebar() {
               key={crypto.randomUUID()}
               icon={<MdSavedSearch />}
               text={item}
+              isEditEnabled={true}
               isDeleteEnabled={true}
               onChange={handleQuickSearchChange}
               onDelete={handleQuickSearchDelete}
@@ -119,25 +137,54 @@ export default function Sidebar() {
             />
           ))
         }
+
+        {/* Add New Item Button */}
+        <div className="mt-2">
+          <SidebarInputItem
+            icon={<LiaSearchPlusSolid />}
+            text={""}
+            isEditEnabled={true}
+            isDeleteEnabled={false}
+            onChange={(oldValue: string, newValue: string) => {
+              if (newValue.trim() === "") {
+                toast.error("Quick search item cannot be empty.");
+                return;
+              }
+
+              localStoreApi.addQuickSearchItem(newValue);
+              setQuickSearchData(localStoreApi.getQuickSearch());
+              return true; // No error
+            }}
+          />
+        </div>
+        <br />
+        <hr />
+        <br />
+
+        {/* Previously Watched */}
+        {previouslyWatchedData?.length > 0 &&
+          <div className="items-center space-x-2 mt-4">
+            <h1 className="font-semibold cursor-default">Previously Watched</h1>
+          </div>
+        }
+        {previouslyWatchedData?.length > 0 &&
+          previouslyWatchedData.map((item: any) => (
+            item && item.title &&
+            <SidebarInputItem
+              key={crypto.randomUUID()}
+              icon={<MdHistory />}
+              text={item.title}
+              isEditEnabled={false}
+              isDeleteEnabled={false}
+              onClick={() => handlePreviouslyWatchedClick(item)}
+            />
+          ))
+        }
       </div>
 
-      {/* Add New Item Button */}
-      <div className="mt-2">
-        <SidebarInputItem
-          icon={<LiaSearchPlusSolid />}
-          text={""}
-          isDeleteEnabled={false}
-          onChange={(oldValue: string, newValue: string) => {
-            if (newValue.trim() === "") {
-              toast.error("Quick search item cannot be empty.");
-              return;
-            }
-
-            localStoreApi.addQuickSearchItem(newValue);
-            setQuickSearchData(localStoreApi.getQuickSearch());
-            return true; // No error
-          }}
-        />
+      {/* Footer */}
+      <div className="mt-6 mb-6 text-gray-500 text-sm cursor-default">
+        <p>JustWatchTV Developed by <a href="https://github.com/nikhilgajam" className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">Nikhil Gajam</a></p>
       </div>
     </div>
   );

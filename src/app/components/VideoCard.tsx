@@ -1,11 +1,20 @@
 import React from "react";
 import TimeBadge from "./TimeBadge";
 import { useContextData } from "../context/Context";
+import localStoreApi from "@/utils/localStorageApi";
 
 export default function VideoCard({ videoData }: { videoData: any }) {
-  const { setSelectedVideo, homePageRef, setIsVideoPlayerOpen, selectedVideo } = useContextData();
+  const { setSelectedVideo, homePageRef, setIsVideoPlayerOpen, selectedVideo, playerRef } = useContextData();
 
   const handleVideoClick = () => {
+    if (selectedVideo?.id && selectedVideo?.title) {
+      localStoreApi.addPreviouslyWatchedData({
+        id: selectedVideo.id || "",
+        title: selectedVideo.title || "",
+        playingTime: playerRef.current?.getCurrentTime() || 0,
+      });
+    }
+
     setSelectedVideo(videoData);
     homePageRef.current?.scrollTo({ top: 0, behavior: "smooth" });
     setIsVideoPlayerOpen?.(true);
