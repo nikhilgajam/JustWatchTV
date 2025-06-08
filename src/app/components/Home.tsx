@@ -89,7 +89,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex flex-col h-screen items-center overflow-x-hidden overflow-y-hidden">
+    <div className="flex flex-col h-screen items-center overflow-x-hidden overflow-y-hidden outline-none">
       <div
         className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4
         gap-4 p-5 overflow-y-scroll overflow-x-hidden h-full"
@@ -97,7 +97,7 @@ export default function Home() {
       >
         {/* Video Player With Animation */}
         {(!loading || isVideoPlayerOpen) && <div
-          className={`col-span-full transition-all duration-300 ease-in-out overflow-hidden
+          className={`col-span-full transition-all duration-300 ease-in-out overflow-hidden outline-none
             ${isVideoPlayerOpen ? "h-[400px] scale-100" : "h-0 scale-0"}`}
         >
           {isVideoPlayerOpen && <VideoPlayer />}
@@ -110,14 +110,14 @@ export default function Home() {
 
         {/* Welcome Text */}
         {loading && !searchQuery && !data?.items?.length && (
-          <div className="col-span-full flex justify-center items-center text-xl md:text-4xl">
+          <div className="col-span-full flex justify-center items-center text-xl md:text-4xl outline-none">
             <h1>Welcome to the JustWatchTV</h1>
           </div>
         )}
 
         {/* Loading Indicator */}
         {loading &&
-          <div className="col-span-full flex justify-center items-center mt-12 mb-12">
+          <div className="col-span-full flex justify-center items-center mt-12 mb-12 outline-none">
             <BarLoader color="white" />
           </div>
         }
@@ -127,7 +127,7 @@ export default function Home() {
 
         {/* Error Display */}
         {error &&
-          <div className="col-span-full text-center text-xl font-semibold text-red-500 mt-4">
+          <div className="col-span-full text-center text-xl font-semibold text-red-500 mt-4 outline-none">
             <p>{error}</p>
           </div>
         }
