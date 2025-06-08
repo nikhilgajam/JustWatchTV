@@ -1,10 +1,44 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import ReactPlayer from "react-player";
 import localStoreApi from "@/utils/localStorageApi";
 import { useContextData } from "../context/Context";
 
 export default function VideoPlayer() {
   const { data, selectedVideo, setSelectedVideo, playerRef } = useContextData();
+
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (selectedVideo?.id && selectedVideo?.title) {
+        const selectedVideoData = {
+          id: selectedVideo.id,
+          title: selectedVideo.title,
+          playingTime: playerRef.current?.getCurrentTime() || 0,
+        };
+
+        localStoreApi.addPreviouslyWatchedData(selectedVideoData);
+      }
+    }
+    // Save video progress to Local Storage before the window is closed or refreshed
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    
+    // Clean up
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (selectedVideo?.id && selectedVideo?.title) {
+      // Save the currently playing video to Local Storage when the component mounts
+      localStoreApi.addPreviouslyWatchedData({
+        id: selectedVideo.id,
+        title: selectedVideo.title,
+        playingTime: playerRef.current?.getCurrentTime() || 0,
+      });
+    }
+  }, []);
 
   return (
     <div className="flex flex-col w-full h-full justify-center items-center bg-black p-4 rounded-xl shadow-gray-700 shadow-md">
