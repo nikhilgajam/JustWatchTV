@@ -92,7 +92,7 @@ export default function Home() {
     <div className="flex flex-col h-screen items-center overflow-x-hidden overflow-y-hidden outline-none">
       <div
         className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4
-        gap-4 p-5 overflow-y-scroll overflow-x-hidden h-full"
+        gap-4 p-5 overflow-y-scroll overflow-x-hidden h-full outline-none"
         ref={homePageRef}
       >
         {/* Video Player With Animation */}
