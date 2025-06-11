@@ -30,7 +30,7 @@ export default function SearchPane() {
       {(searchSuggestions).map((item, index) => (
         <button
           key={index}
-          className="w-full flex items-center space-x-2 p-2 outline-none
+          className="w-full flex text-left space-x-2 p-2 outline-none
           hover:bg-gray-700 focus:bg-gray-700 rounded-md cursor-pointer"
           onClick={() => handleClick(item)}
         >
