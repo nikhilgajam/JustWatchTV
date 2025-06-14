@@ -30,12 +30,12 @@ const ScrollButton = () => {
     const videoExists = data?.items?.some((video: any) => video.id === selectedVideo?.id);
 
     if (!videoExists) {
-      toast("Video not found on the screen to screen.") {
+      toast("Video not found on the screen to screen.", {
         style: {
           backgroundColor: "#333",
           color: "#fff",
         }
-      }
+      });
 
       return;
     }
