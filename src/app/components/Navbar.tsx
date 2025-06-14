@@ -178,7 +178,7 @@ export default function Navbar() {
       {/* Video Player Toggle Button */}
       <div className="items-center mt-1">
         <button
-          title="Video Player"
+          title="Toggle Video Player"
           className="cursor-pointer hover:opacity-60 transition-opacity duration-300"
           onClick={handlePlayerToggle}
         >
