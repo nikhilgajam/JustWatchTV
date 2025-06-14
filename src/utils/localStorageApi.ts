@@ -105,8 +105,8 @@ const localStoreApi = {
     const videoExists = previouslyWatchedData.some((v: any) => v.id === video?.id);
     if (videoExists) {
       // If exists, update the existing video and move to the top
-      previouslyWatchedData = previouslyWatchedData.filter((v: any) => v.id === video?.id); // Filter out the existing video
-      previouslyWatchedData.unshift({ ...video }); // Add the updated video to the beginning
+      previouslyWatchedData = previouslyWatchedData.filter((v: any) => v.id !== video?.id); // List of all videos except existing
+      previouslyWatchedData.unshift({ ...video }); // Add the existing updated video to the top
     } else {
       // Add the new video to the beginning of the array
       previouslyWatchedData.unshift(video);
