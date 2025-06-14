@@ -4,7 +4,8 @@ const initialLocalStorageData = {
   autoPlay: true,
   defaultSearchString: "Trending Scientific Documentaries",
   quickSearch: ["Ben 10", "Tom And Jerry Tales"],
-  previouslyWatchedData: []
+  previouslyWatchedData: [],
+  maxHistoryLength: 10, // Maximum number of previously watched videos to keep
 };
 
 
@@ -103,19 +104,15 @@ const localStoreApi = {
     // Check if the video already exists in the previouslyWatchedData array
     const videoExists = previouslyWatchedData.some((v: any) => v.id === video?.id);
     if (videoExists) {
-      // If exists update the existing video
-      previouslyWatchedData = previouslyWatchedData.map((v: any) => {
-        if (v.id === video.id) {
-          return { ...v, playingTime: video.playingTime, title: video.title };
-        }
-        return v;
-      });
+      // If exists, update the existing video and move to the top
+      previouslyWatchedData = previouslyWatchedData.filter((v: any) => v.id === video?.id); // Filter out the existing video
+      previouslyWatchedData.unshift({ ...video }); // Add the updated video to the beginning
     } else {
       // Add the new video to the beginning of the array
       previouslyWatchedData.unshift(video);
 
-      // Limit the array to the last 10 videos
-      if (previouslyWatchedData.length > 10) {
+      // Limit the array to the maxHistoryLength videos
+      if (previouslyWatchedData.length > (dataObj?.maxHistoryLength ?? 10)) {
         previouslyWatchedData.pop();
       }
     }

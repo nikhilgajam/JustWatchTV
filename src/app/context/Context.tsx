@@ -43,7 +43,7 @@ export default function ContextProvider({ children }: { children: React.ReactNod
   const [data, setData] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchSuggestions, setSearchSuggestions] = useState<string[]>([]);
-  const [selectedVideo, setSelectedVideo] = useState({});
+  const [selectedVideo, setSelectedVideo] = useState<any>({});
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isVideoPlayerOpen, setIsVideoPlayerOpen] = useState(false);
   const [triggerSearch, setTriggerSearch] = useState(false);
@@ -53,15 +53,20 @@ export default function ContextProvider({ children }: { children: React.ReactNod
   const fetchData = async (query: string) => {
     try {
       setData(() => []);
-      setIsVideoPlayerOpen(false); // Hiding video player when new data is loading
       setLoading(true);
+
       try {
         const response = await getSearchData(query);
         if (response?.data?.items && response.data.items.length > 0) {
           setData(response.data);
-          setSelectedVideo({
-            id: response?.data?.items[0]?.id,
-          })
+
+          // If video player is not open then set the first video as selected
+          if (!isVideoPlayerOpen) {
+            setSelectedVideo({
+              id: response?.data?.items[0]?.id,
+            });
+          }
+
           setSearchSuggestions([]);
           homePageRef?.current?.focus();
           setError("");

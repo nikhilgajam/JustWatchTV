@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { FaArrowCircleUp } from "react-icons/fa";
 import { FaCheckCircle } from "react-icons/fa";
 import { useContextData } from "../context/Context";
+import toast from "react-hot-toast";
 
 const ScrollButton = () => {
-  const { homePageRef, selectedVideo } = useContextData();
+  const { homePageRef, selectedVideo, data } = useContextData();
   const [isUp, setIsUp] = useState(false);
 
   const toggleVisible = () => {
@@ -25,7 +26,21 @@ const ScrollButton = () => {
   };
 
   const scrollToVideo = () => {
-    // how to scroll to a id using html
+    // Check if the selected video exists in the data array
+    const videoExists = data?.items?.some((video: any) => video.id === selectedVideo?.id);
+
+    if (!videoExists) {
+      toast("Video not found on the screen to screen.") {
+        style: {
+          backgroundColor: "#333",
+          color: "#fff",
+        }
+      }
+
+      return;
+    }
+
+    // Scroll to selected video using id
     const videoElement = document.getElementById(selectedVideo?.id);
     if (videoElement) {
       videoElement.scrollIntoView({ behavior: "smooth" });
