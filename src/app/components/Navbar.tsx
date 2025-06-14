@@ -147,7 +147,7 @@ export default function Navbar() {
           className="ml-2 cursor-pointer hover:opacity-60 transition-opacity duration-300"
           onClick={() => window.location.reload()}
         >
-          <img src="/tv.png" alt="JustWatch TV Logo" title="JustWatch TV" width={40} />
+          <img src="/tv.png" alt="JustWatchTV Logo" title="JustWatchTV" width={40} />
         </button>
       </div>
 
