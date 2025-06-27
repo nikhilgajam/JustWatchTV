@@ -36,7 +36,7 @@ export default function Home() {
     const scrollHeight = container.scrollHeight;
     const isAtBottom = scrollHeight - scrollPosition <= 1; // Small Threshold
 
-    if (isAtBottom !== isBottom) {
+    if (isAtBottom && !isBottom) {
       setIsBottom(true);
     }
   };
@@ -61,6 +61,15 @@ export default function Home() {
       }
       setError("");
     } catch (error) {
+      const errObj: any = error;
+      let message = errObj?.response?.data?.error;
+
+      // Handle no data found case
+      if (message === "No results found") {
+        setError("No more results found. Try searching for something new.");
+        return;
+      }
+
       console.error("Error fetching next page data:", error);
       setError("Error loading more videos. Please try again.");
       toast.error("Error loading more videos. Please try again.");
@@ -91,7 +100,7 @@ export default function Home() {
   return (
     <div className="flex flex-col h-screen items-center overflow-x-hidden overflow-y-hidden outline-none">
       <div
-        className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4
+        className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 4xl:grid-cols-6
         gap-4 p-5 overflow-y-scroll overflow-x-hidden h-full outline-none"
         ref={homePageRef}
       >

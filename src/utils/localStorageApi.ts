@@ -2,6 +2,7 @@ const DataConstant = 'JustWatchTV';
 const initialLocalStorageData = {
   searchSuggestion: true,
   autoPlay: true,
+  includeShorts: false,
   defaultSearchString: "Trending Scientific Documentaries",
   quickSearch: ["Ben 10", "Tom And Jerry Tales"],
   previouslyWatchedData: [],
@@ -42,6 +43,16 @@ const localStoreApi = {
   toggleAutoPlay() {
     const dataObj = this.getStorageData();
     this.setStorageData({ ...dataObj, autoPlay: !dataObj.autoPlay });
+  },
+
+  // These functions will return and set the Include Shorts in Local Storage.
+  getIncludeShorts() {
+    const dataObj = this.getStorageData();
+    return dataObj.includeShorts;
+  },
+  toggleIncludeShorts() {
+    const dataObj = this.getStorageData();
+    this.setStorageData({ ...dataObj, includeShorts: !dataObj.includeShorts });
   },
 
   // These functions will return and set the Default Search String in Local Storage.
@@ -104,15 +115,15 @@ const localStoreApi = {
     // Check if the video already exists in the previouslyWatchedData array
     const videoExists = previouslyWatchedData.some((v: any) => v.id === video?.id);
     if (videoExists) {
-      // If exists, update the existing video and move to the top
-      previouslyWatchedData = previouslyWatchedData.filter((v: any) => v.id !== video?.id); // List of all videos except existing
-      previouslyWatchedData.unshift({ ...video }); // Add the existing updated video to the top
+      // If exists, update the existing video and move it to the top
+      previouslyWatchedData = previouslyWatchedData.filter((v: any) => v.id !== video.id); // Remove the existing video
+      previouslyWatchedData.unshift({ ...video }); // Add the updated video to the beginning
     } else {
       // Add the new video to the beginning of the array
       previouslyWatchedData.unshift(video);
 
       // Limit the array to the maxHistoryLength videos
-      if (previouslyWatchedData.length > (dataObj?.maxHistoryLength ?? 10)) {
+      if (previouslyWatchedData.length > (dataObj?.maxHistoryLength || 10)) {
         previouslyWatchedData.pop();
       }
     }

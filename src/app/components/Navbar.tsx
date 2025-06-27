@@ -97,6 +97,7 @@ export default function Navbar() {
       if (event.key === "Enter") {
         setSearchSuggestions(() => []); // Clear search suggestions
         setTriggerSearch(true); // Trigger search on Enter key
+        setIsSidebarOpen(false); // Close sidebar after clicked
         homePageRef?.current?.focus(); // Focus on the home page to scroll to the top
       } else if (event.key === "Escape") {
         setSearchSuggestions([]); // Clear search suggestions

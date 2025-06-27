@@ -342,6 +342,18 @@ const VideoRender = (json) => {
           }
         });
       }
+      let isShorts = false;
+      if (videoRenderer.thumbnailOverlays) {
+        videoRenderer.thumbnailOverlays.forEach((item) => {
+          if (
+            item.thumbnailOverlayTimeStatusRenderer &&
+            item.thumbnailOverlayTimeStatusRenderer.style &&
+            item.thumbnailOverlayTimeStatusRenderer.style == "SHORTS"
+          ) {
+            isShorts = true;
+          }
+        });
+      }
       const id = videoRenderer.videoId;
       const thumbnail = videoRenderer.thumbnail;
       const title = videoRenderer.title.runs[0].text;
@@ -363,7 +375,8 @@ const VideoRender = (json) => {
         channelTitle,
         shortBylineText,
         length: lengthText,
-        isLive
+        isLive,
+        isShorts
       };
     } else {
       return {};

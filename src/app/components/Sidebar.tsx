@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { MdManageSearch } from "react-icons/md";
 import { IoPlayForward } from "react-icons/io5";
 import { TbReportSearch } from "react-icons/tb";
+import { SiYoutubeshorts } from "react-icons/si";
 import { MdSavedSearch } from "react-icons/md";
 import { LiaSearchPlusSolid } from "react-icons/lia";
 import { MdHistory } from "react-icons/md";
@@ -36,6 +37,12 @@ export default function Sidebar() {
       isOn: localStoreApi.getAutoPlay(),
       onChange: () => localStoreApi.toggleAutoPlay(),
     },
+    {
+      name: "Include Shorts",
+      icon: <SiYoutubeshorts />,
+      isOn: localStoreApi.getIncludeShorts(),
+      onChange: () => localStoreApi.toggleIncludeShorts(),
+    }
   ];
 
   const handleQuickSearchChange = (oldValue: string, newValue: string) => {
