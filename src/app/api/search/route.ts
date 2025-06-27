@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    // Fetch data from YouTube using youtube-sr
+    // Fetch data
     const data = await GetListByKeyword(query, false, 100, [{ type: "video" }]);
 
     if (!data?.items || data.items.length === 0) {

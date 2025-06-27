@@ -11,8 +11,8 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
 
   try {
-    // Fetch data from YouTube using youtube-sr
-    const data = await NextPage(body.data.nextPageObj, false, 100);
+    // Fetch data
+    const data = await NextPage(body?.data?.nextPageObj, false, 100);
 
     if (!data?.items || data.items.length === 0) {
       return NextResponse.json({ error: "No results found" }, { status: 404 });

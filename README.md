@@ -21,7 +21,7 @@ This is a simple yet powerful way of content consumption.
 
 ## Frontend:
 - This layer consists only root (/). As everything is rendered in one page.
-- If any endpoint is hit other than the root and api then the page is redirected to root.
+- If any endpoint is hit other than the root or api then the page is redirected to root.
 - Implemented using NextJS.
 
 ## Backend For Frontend (BFF) API:
@@ -30,9 +30,9 @@ This is a simple yet powerful way of content consumption.
 
 ### Routes:
 ```
-/api/search?query=string        (GET)    Retrieves the search results.
-/api/search-next-page           (POST)   Retrieves the more data with the search context.
-/api/suggestions?query=string   (GET)    Retrieves search suggestions list.
+/api/search?query=string        (GET)    Returns videos list based on search query.
+/api/search-next-page           (POST)   Returns more videos list based on nextPageObj.
+/api/suggestions?query=string   (GET)    Returns suggestions list based on search query.
 ```
 
 ## Running In Local

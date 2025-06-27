@@ -15,6 +15,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
+    // Fetch Data
     const suggestions = await getSearchSuggestions(query);
 
     // Return the results as JSON
