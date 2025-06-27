@@ -62,7 +62,7 @@ export default function Home() {
       setError("");
     } catch (error) {
       const errObj: any = error;
-      let message = errObj?.response?.data?.error;
+      const message = errObj?.response?.data?.error;
 
       // Handle no data found case
       if (message === "No results found") {
