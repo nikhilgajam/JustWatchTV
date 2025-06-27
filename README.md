@@ -20,13 +20,13 @@ This is a simple yet powerful way of content consumption.
 
 
 ## Frontend:
-- This layer consists only root page (/). As everything is rendered in one page.
-- If any other endpoint is hit other than the root and api then the view is redirected to root.
+- This layer consists only root (/). As everything is rendered in one page.
+- If any endpoint is hit other than the root and api then the page is redirected to root.
 - Implemented using NextJS.
 
 ## Backend For Frontend (BFF) API:
-- This layer consists of API's which combines other API's to provide seamless response.
-- As layer consists following API endpoints.
+- This layer consists of APIs that integrate other APIs to deliver a seamless response.
+- Take a look at the following routes for more info.
 
 ### Routes:
 ```
