@@ -44,7 +44,7 @@ export const getSearchSuggestions = async (query: string) => {
 
 export const getPlaylists = async (query: string) => {
   try {
-    const response = await axios.get("/api/search-playlist",
+    const response = await axios.get("/api/search-playlists",
       {
         params: { query },
       }

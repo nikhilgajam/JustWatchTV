@@ -30,9 +30,10 @@ This is a simple yet powerful way of content consumption.
 
 ### Routes:
 ```
-/api/search?query=string        (GET)    Returns videos list based on search query.
-/api/search-next-page           (POST)   Returns more videos list based on nextPageObj.
-/api/suggestions?query=string   (GET)    Returns suggestions list based on search query.
+/api/search?query=string            (GET)    Returns videos list based on search query.
+/api/search-next-page               (POST)   Returns more videos list based on nextPageObj.
+/api/search-playlists?query=string  (GET)    Returns playlists based on the query.
+/api/suggestions?query=string       (GET)    Returns suggestions list based on search query.
 ```
 
 ## Running In Local
@@ -48,7 +49,6 @@ pnpm dev
 # or
 bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the project running.
 
 ### Developed By Nikhil Gajam
