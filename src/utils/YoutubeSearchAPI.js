@@ -435,6 +435,41 @@ const GetShortVideo = async () => {
   }));
 };
 
+const GetPlaylists = async (keyword) => {
+  let endpoint = `${youtubeEndpoint}/results?search_query=${keyword}&sp=EgIQAw%3D%3D`;
+  try {
+    const page = await GetYoutubeInitData(endpoint);
+    const sectionListRenderer = page.initdata.contents
+      .twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer;
+
+    let items = [];
+    sectionListRenderer.contents.forEach((content) => {
+      if (content.itemSectionRenderer) {
+        content.itemSectionRenderer.contents.forEach((item) => {
+          if (item.lockupViewModel) {
+            const playlistId = item?.lockupViewModel?.contentId || null;
+            const title = item?.lockupViewModel?.metadata?.lockupMetadataViewModel?.title?.content || null;
+            const thumbnails = item?.lockupViewModel?.contentImage?.collectionThumbnailViewModel?.primaryThumbnail?.thumbnailViewModel?.image?.sources || null;
+
+            items.push({
+              id: playlistId,
+              playlistId,
+              type: "playlist",
+              title: title,
+              thumbnail: { thumbnails },
+            });
+          }
+        });
+      }
+    });
+
+    return Promise.resolve({ items });
+  } catch (ex) {
+    console.error(ex);
+    return Promise.reject(ex);
+  }
+};
+
 
 /**
  * npm youtube-sr
@@ -453,11 +488,11 @@ async function getFetch() {
 
   // try to resolve fetch by importing fetch libs
   for (const fetchLib of FETCH_LIBS) {
-      try {
-          const pkg = await import(fetchLib);
-          const mod = pkg.fetch || pkg.default || pkg;
-          if (mod) return (__fetch = mod);
-      } catch {}
+    try {
+      const pkg = await import(fetchLib);
+      const mod = pkg.fetch || pkg.default || pkg;
+      if (mod) return (__fetch = mod);
+    } catch { }
   }
 
   if (isNode) throw new Error(`Could not resolve fetch library. Install one of ${FETCH_LIBS.map((m) => `"${m}"`).join(", ")} or define "fetch" in global scope!`);
@@ -522,4 +557,5 @@ export {
   GetVideoDetails,
   GetShortVideo,
   getSearchSuggestions,
+  GetPlaylists,
 };

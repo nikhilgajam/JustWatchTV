@@ -15,13 +15,13 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    // Fetch Data
+    // Fetch data
     const suggestions = await getSearchSuggestions(query);
 
     // Return the results as JSON
     return NextResponse.json(suggestions, { status: 200 });
   } catch (error: any) {
-    console.error("Error fetching YouTube data:", error);
+    console.error("Error fetching suggestions:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

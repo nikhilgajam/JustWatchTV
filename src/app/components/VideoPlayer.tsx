@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useEffect } from "react";
 import ReactPlayer from "react-player";
 import localStoreApi from "@/utils/localStorageApi";
@@ -10,32 +8,34 @@ export default function VideoPlayer() {
 
   useEffect(() => {
     const handleBeforeUnload = () => {
-      if (selectedVideo?.id && selectedVideo?.title) {
+      // Save video progress to local storage before the window is closed or refreshed
+      if (selectedVideo?.id && !selectedVideo?.title) {
         const selectedVideoData = {
           id: selectedVideo.id,
           title: selectedVideo.title,
           playingTime: playerRef.current?.getCurrentTime() || 0,
+          playlistId: selectedVideo.playlistId || undefined,
         };
 
         localStoreApi.addPreviouslyWatchedData(selectedVideoData);
       }
-    }
-    // Save video progress to Local Storage before the window is closed or refreshed
+    };
+  
     window.addEventListener("beforeunload", handleBeforeUnload);
-
-    // Clean up
+  
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
-    }
+    };
   }, []);
 
   useEffect(() => {
+    // Save the currently playing video to local storage when the component mounts
     if (selectedVideo?.id && selectedVideo?.title) {
-      // Save the currently playing video to Local Storage when the component mounts
       localStoreApi.addPreviouslyWatchedData({
         id: selectedVideo.id,
         title: selectedVideo.title,
         playingTime: playerRef.current?.getCurrentTime() || 0,
+        playlistId: selectedVideo.playlistId || undefined,
       });
     }
   }, [selectedVideo]);
@@ -43,9 +43,10 @@ export default function VideoPlayer() {
   return (
     <div className="flex flex-col w-full h-full justify-center items-center bg-black p-4 rounded-xl shadow-gray-700 shadow-md">
       <ReactPlayer
+        key={selectedVideo?.playlistId || selectedVideo?.id}
         className="max-w-full"
         ref={playerRef}
-        url={`https://www.youtube.com/watch?v=${selectedVideo?.id}`}
+        url={`https://www.youtube.com/embed/${selectedVideo?.id}`}
         controls={true}
         playing={true}
         onReady={() => {
@@ -64,25 +65,15 @@ export default function VideoPlayer() {
           );
           // If there is a next video, play it
           if (currentIndex !== -1 && currentIndex < data?.items?.length - 1) {
-            const nextVideoId = data?.items[currentIndex + 1]?.id;
             setSelectedVideo({
-              id: nextVideoId,
-            });
-
-            // Save the next selected video data to the local storage
-            localStoreApi.addPreviouslyWatchedData({
-              id: nextVideoId,
-              title: data?.items[currentIndex + 1]?.title,
-              playingTime: 0,
+              ...data?.items[currentIndex + 1]
             });
           }
         }}
         config={{
           youtube: {
             playerVars: {
-              showinfo: 1, // Show video information
-              rel: 1, // Show related videos at the end
-              iv_load_policy: 3, // Disable annotations
+              list: selectedVideo?.playlistId || undefined,
             }
           }
         }}

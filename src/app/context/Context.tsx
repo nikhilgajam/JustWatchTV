@@ -7,7 +7,7 @@ import React, {
   useContext,
   useRef,
 } from "react";
-import { getSearchData } from "@/utils/apiRequests";
+import { getSearchData, getPlaylists } from "@/utils/apiRequests";
 import toast from "react-hot-toast";
 import ReactPlayer from "react-player";
 import localStoreApi from "@/utils/localStorageApi";
@@ -54,17 +54,28 @@ export default function ContextProvider({ children }: { children: React.ReactNod
     try {
       setData(() => []);
       setLoading(true);
-
       try {
         const response = await getSearchData(query);
+
+        let playlistResponse = null;
+        // Fetch playlists if the user has opted to include them
+        if (localStoreApi.getIncludePlaylists()) {
+          playlistResponse = await getPlaylists(query);
+        }
+
         if (response?.data?.items && response.data.items.length > 0) {
-          setData(response.data);
+          if (playlistResponse) {
+            // Merge playlist items with search results and place at the beginning
+            response.data.items.unshift(...playlistResponse?.data?.items);
+          }
+
+          setData(response.data); 
 
           // If video player is not open then set the first video as selected
           if (!isVideoPlayerOpen) {
             setSelectedVideo({
               id: response?.data?.items[0]?.id,
-            });
+            })
           }
 
           setSearchSuggestions([]);

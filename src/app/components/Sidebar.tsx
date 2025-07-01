@@ -3,6 +3,7 @@ import { MdManageSearch } from "react-icons/md";
 import { IoPlayForward } from "react-icons/io5";
 import { TbReportSearch } from "react-icons/tb";
 import { SiYoutubeshorts } from "react-icons/si";
+import { MdOutlinePlaylistPlay } from "react-icons/md";
 import { MdSavedSearch } from "react-icons/md";
 import { LiaSearchPlusSolid } from "react-icons/lia";
 import { MdHistory } from "react-icons/md";
@@ -42,6 +43,12 @@ export default function Sidebar() {
       icon: <SiYoutubeshorts />,
       isOn: localStoreApi.getIncludeShorts(),
       onChange: () => localStoreApi.toggleIncludeShorts(),
+    },
+    {
+      name: "Search Playlists",
+      icon: <MdOutlinePlaylistPlay />,
+      isOn: localStoreApi.getIncludePlaylists(),
+      onChange: () => localStoreApi.toggleIncludePlaylists(),
     }
   ];
 
@@ -71,12 +78,12 @@ export default function Sidebar() {
 
   const handleDefaultSearchChange = (oldValue: string, newValue: string) => {
     if (newValue.trim() === "") {
-      toast.error("Default search string cannot be empty.");
+      toast.error("Homepage search string cannot be empty.");
       return true; // Error: Empty value
     }
 
     localStoreApi.setDefaultSearchString(newValue);
-    toast.success("Default search string updated.");
+    toast.success("Homepage search string updated.");
   }
 
   const handlePreviouslyWatchedClick = (data: any) => {

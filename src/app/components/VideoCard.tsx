@@ -12,6 +12,7 @@ export default function VideoCard({ videoData }: { videoData: any }) {
         id: selectedVideo.id || "",
         title: selectedVideo.title || "",
         playingTime: playerRef.current?.getCurrentTime() || 0,
+        playlistId: selectedVideo.playlistId || undefined,
       });
     }
 
@@ -22,7 +23,6 @@ export default function VideoCard({ videoData }: { videoData: any }) {
 
   const isShorts = (duration: string) => {
     if (!duration) return false;
-
     const parts = duration.split(':');
 
     if (parts.length === 1) {
@@ -41,7 +41,9 @@ export default function VideoCard({ videoData }: { videoData: any }) {
   };
 
   // Condition to not include shorts
-  if (!localStoreApi.getIncludeShorts() && (videoData?.isShort || isShorts(videoData?.length?.simpleText))) {
+  if (!localStoreApi.getIncludeShorts()
+    && videoData?.type !== "playlist"
+    && (videoData?.isShorts || isShorts(videoData?.length?.simpleText))) {
     return null;
   }
 
@@ -69,6 +71,7 @@ export default function VideoCard({ videoData }: { videoData: any }) {
             {/* Time Display Badge */}
             {videoData?.length?.simpleText && (<TimeBadge time={videoData.length.simpleText} />)}
             {!videoData?.length?.simpleText && videoData?.isLive && (<TimeBadge time={"LIVE"} />)}
+            {!videoData?.length?.simpleText && videoData?.type === "playlist" && (<TimeBadge time={"PLAYLIST"} />)}
           </div>
 
           {/* Video Data */}

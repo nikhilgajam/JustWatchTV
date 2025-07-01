@@ -9,7 +9,7 @@ export const getSearchData = async (query: string) => {
     });
     return response;
   } catch (error) {
-    console.error("Error fetching search data:", error);
+    console.error("Error fetching search list data:", error);
     throw error;
   }
 }
@@ -23,7 +23,7 @@ export const getSearchNextPageData = async (nextPageObj: any) => {
     });
     return response;
   } catch (error) {
-    console.error("Error fetching search data:", error);
+    console.error("Error fetching next page data:", error);
     throw error;
   }
 }
@@ -38,6 +38,20 @@ export const getSearchSuggestions = async (query: string) => {
     return response;
   } catch (error) {
     console.error("Error fetching suggestions:", error);
+    throw error;
+  }
+}
+
+export const getPlaylists = async (query: string) => {
+  try {
+    const response = await axios.get("/api/search-playlist",
+      {
+        params: { query },
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error("Error fetching playlists:", error);
     throw error;
   }
 }

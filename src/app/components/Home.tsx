@@ -66,7 +66,7 @@ export default function Home() {
 
       // Handle no data found case
       if (message === "No results found") {
-        setError("No more results found. Try searching for something new.");
+        setError("No more results. Try searching for something new.");
         return;
       }
 
@@ -114,7 +114,7 @@ export default function Home() {
 
         {/* Videos List */}
         {data?.items?.length > 0 && data.items.map((video: any) => (
-          video?.id && video?.type === "video" && <VideoCard key={video.id} videoData={video} />
+          video?.id && <VideoCard key={video.id} videoData={video} />
         ))}
 
         {/* Welcome Text */}

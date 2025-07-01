@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
     // Return the results as JSON
     return NextResponse.json(data, { status: 200 });
   } catch (error: any) {
-    console.error("Error fetching YouTube data:", error);
+    console.error("Error fetching next page:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

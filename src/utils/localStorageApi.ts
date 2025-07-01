@@ -3,6 +3,7 @@ const initialLocalStorageData = {
   searchSuggestion: true,
   autoPlay: true,
   includeShorts: false,
+  includePlaylists: false,
   defaultSearchString: "Trending Scientific Documentaries",
   quickSearch: ["Ben 10", "Tom And Jerry Tales"],
   previouslyWatchedData: [],
@@ -53,6 +54,16 @@ const localStoreApi = {
   toggleIncludeShorts() {
     const dataObj = this.getStorageData();
     this.setStorageData({ ...dataObj, includeShorts: !dataObj.includeShorts });
+  },
+
+  // These functions will return and set the Include Playlists in Local Storage.
+  getIncludePlaylists() {
+    const dataObj = this.getStorageData();
+    return dataObj.includePlaylists;
+  },
+  toggleIncludePlaylists() {
+    const dataObj = this.getStorageData();
+    this.setStorageData({ ...dataObj, includePlaylists: !dataObj.includePlaylists });
   },
 
   // These functions will return and set the Default Search String in Local Storage.
