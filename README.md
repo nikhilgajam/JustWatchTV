@@ -7,17 +7,17 @@ This is a simple yet powerful way of content consumption.
 
 ## Features:
 - Quick search queries can be added to local storage.
-- Default load Screen can be updated.
+- Homepage search string can be updated.
 - Previously watched list will get updated to local storage till 10 videos with saved watching time.
 - Button to scroll from selected video to video player and vice versa.
 - Lazy loaded data when scrolled to the bottom of the page.
+- Option to enable or disable short video's.
+- Playlist video support.
 - Search suggestions available.
-
 
 ## Deployment URL's:
 - https://justwatchtv.vercel.app
 - https://just-watch-tv.vercel.app
-
 
 ## Frontend:
 - This layer consists only root (/). As everything is rendered in one page.
