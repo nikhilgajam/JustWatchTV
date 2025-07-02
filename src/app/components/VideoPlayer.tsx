@@ -15,14 +15,17 @@ export default function VideoPlayer() {
           title: selectedVideo.title,
           playingTime: playerRef.current?.getCurrentTime() || 0,
           playlistId: selectedVideo.playlistId || undefined,
+          index: selectedVideo.playlistId
+            ? playerRef.current?.getInternalPlayer()?.getPlaylistIndex() || 0
+            : undefined,
         };
 
         localStoreApi.addPreviouslyWatchedData(selectedVideoData);
       }
     };
-  
+
     window.addEventListener("beforeunload", handleBeforeUnload);
-  
+
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
@@ -36,6 +39,9 @@ export default function VideoPlayer() {
         title: selectedVideo.title,
         playingTime: playerRef.current?.getCurrentTime() || 0,
         playlistId: selectedVideo.playlistId || undefined,
+        index: selectedVideo.playlistId
+          ? playerRef.current?.getInternalPlayer()?.getPlaylistIndex() || 0
+          : undefined,
       });
     }
   }, [selectedVideo]);
@@ -46,10 +52,14 @@ export default function VideoPlayer() {
         key={selectedVideo?.playlistId || selectedVideo?.id}
         className="max-w-full"
         ref={playerRef}
-        url={`https://www.youtube.com/embed/${selectedVideo?.id}`}
+        url={`https://www.youtube-nocookie.com/embed/${selectedVideo?.id}`} // https://www.youtube.com/embed/${selectedVideo?.id}
         controls={true}
         playing={true}
-        onReady={() => {
+        onReady={async () => {
+          // If index is available, play that video in a playlist
+          if (selectedVideo?.index) {
+            await playerRef.current?.getInternalPlayer()?.playVideoAt(selectedVideo.index);
+          }
           // If playingTime is available, play from that time
           if (selectedVideo?.playingTime) {
             playerRef.current?.seekTo(selectedVideo.playingTime, "seconds");
@@ -74,8 +84,11 @@ export default function VideoPlayer() {
           youtube: {
             playerVars: {
               list: selectedVideo?.playlistId || undefined,
+            },
+            embedOptions: {
+              host: 'https://www.youtube-nocookie.com'
             }
-          }
+          },
         }}
       />
     </div>

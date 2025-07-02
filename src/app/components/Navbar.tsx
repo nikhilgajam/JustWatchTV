@@ -74,6 +74,10 @@ export default function Navbar() {
         id: selectedVideo.id || "",
         title: selectedVideo.title || "",
         playingTime: playerRef.current?.getCurrentTime() || 0,
+        playlistId: selectedVideo.playlistId || undefined,
+        index: selectedVideo.playlistId
+          ? playerRef.current?.getInternalPlayer()?.getPlaylistIndex()
+          : undefined,
       }
 
       // If the video player is being opened, set the selected video with the current playing time
@@ -148,7 +152,7 @@ export default function Navbar() {
           className="ml-2 cursor-pointer hover:opacity-60 transition-opacity duration-300"
           onClick={() => window.location.reload()}
         >
-          <img src="/tv.png" alt="JustWatchTV Logo" title="JustWatchTV" width={40} />
+          <img src="/tv.png" alt="JustWatch TV Logo" title="JustWatch TV" width={40} />
         </button>
       </div>
 
@@ -179,7 +183,7 @@ export default function Navbar() {
       {/* Video Player Toggle Button */}
       <div className="items-center mt-1">
         <button
-          title="Toggle Video Player"
+          title="Video Player"
           className="cursor-pointer hover:opacity-60 transition-opacity duration-300"
           onClick={handlePlayerToggle}
         >

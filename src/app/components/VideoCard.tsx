@@ -13,6 +13,9 @@ export default function VideoCard({ videoData }: { videoData: any }) {
         title: selectedVideo.title || "",
         playingTime: playerRef.current?.getCurrentTime() || 0,
         playlistId: selectedVideo.playlistId || undefined,
+        index: selectedVideo.playlistId
+          ? playerRef.current?.getInternalPlayer()?.getPlaylistIndex() || 0
+          : undefined,
       });
     }
 

@@ -119,7 +119,7 @@ export default function Sidebar() {
 
         {/* Default Search */}
         <div className="items-center space-x-2 mt-4">
-          <h1 className="font-semibold cursor-default">Default Load String</h1>
+          <h1 className="font-semibold cursor-default">Homepage Search String</h1>
         </div>
         <SidebarInputItem
           icon={<TbReportSearch />}
