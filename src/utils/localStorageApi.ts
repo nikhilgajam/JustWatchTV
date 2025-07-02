@@ -129,9 +129,10 @@ const localStoreApi = {
       // If exists, update the existing video and move it to the top
       const videoData = previouslyWatchedData.filter((v: any) => v.id === video.id)[0]; // Get the existing video data
       previouslyWatchedData = previouslyWatchedData.filter((v: any) => v.id !== video.id); // Remove the existing video
-      // Update the playingTime only if the new value is greater
-      video.playingTime = video.playingTime > videoData.playingTime ? video.playingTime : videoData.playingTime;
-      previouslyWatchedData.unshift({ ...video }); // Add the updated video to the beginning
+      // Update the playingTime and index only if the values are greater
+      videoData.playingTime = video.playingTime > videoData.playingTime ? video.playingTime : videoData.playingTime;
+      videoData.index = video.index > videoData.index ? video.index : videoData.index;
+      previouslyWatchedData.unshift({ ...videoData }); // Add the updated video to the beginning
     } else {
       // Add the new video to the beginning of the array
       previouslyWatchedData.unshift(video);
