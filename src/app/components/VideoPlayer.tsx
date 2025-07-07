@@ -10,7 +10,7 @@ export default function VideoPlayer() {
   useEffect(() => {
     const handleBeforeUnload = () => {
       // Save video progress to local storage before the window is closed or refreshed
-      if (selectedVideo?.id && !selectedVideo?.title) {
+      if (selectedVideo?.id && selectedVideo?.title) {
         const selectedVideoData = {
           id: selectedVideo.id,
           title: selectedVideo.title,
