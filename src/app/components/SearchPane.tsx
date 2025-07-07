@@ -34,7 +34,7 @@ export default function SearchPane() {
           hover:bg-gray-700 focus:bg-gray-700 rounded-md cursor-pointer"
           onClick={() => handleClick(item)}
         >
-          <IoIosSearch />
+          <IoIosSearch className="mt-1" />
           <span className="ml-2">{convertToPlainText(item)}</span>
         </button>
       ))}
