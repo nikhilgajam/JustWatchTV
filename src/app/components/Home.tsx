@@ -88,6 +88,17 @@ export default function Home() {
     }
   }, [isBottom, loading]);
 
+  // Auto-load if content is too small to fill container
+  useEffect(() => {
+    const container = homePageRef.current;
+    if (!container || loading || error || !data?.items?.length) return;
+
+    const isContentTooSmall = container.scrollHeight <= container.clientHeight;
+    if (isContentTooSmall && data?.nextPage?.nextPageToken) {
+      handleLazyLoading();
+    }
+  }, [data?.items?.length, loading, error]);
+
   useEffect(() => {
     const container = homePageRef.current;
     if (container) {
