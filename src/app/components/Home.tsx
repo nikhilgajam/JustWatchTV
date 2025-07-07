@@ -118,7 +118,7 @@ export default function Home() {
         {/* Video Player With Animation */}
         {(!loading || isVideoPlayerOpen) && <div
           className={`col-span-full transition-all duration-300 ease-in-out overflow-hidden outline-none
-            ${isVideoPlayerOpen ? "h-[400px] scale-100" : "h-0 scale-0"}`}
+            ${isVideoPlayerOpen ? "h-[300px] md:h-[540px] 2xl:h-[650px] scale-100" : "h-0 scale-0"}`}
         >
           {isVideoPlayerOpen && <VideoPlayer />}
         </div>}
