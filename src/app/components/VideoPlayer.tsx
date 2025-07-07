@@ -37,6 +37,8 @@ export default function VideoPlayer() {
       <ReactPlayer
         key={selectedVideo?.playlistId || selectedVideo?.id}
         className="max-w-full"
+        width={"100%"}
+        height={"100%"}
         ref={playerRef}
         url={`https://www.youtube-nocookie.com/embed/${selectedVideo?.id}`} // https://www.youtube.com/embed/${selectedVideo?.id}
         controls={true}
