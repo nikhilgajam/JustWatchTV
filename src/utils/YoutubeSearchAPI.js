@@ -367,6 +367,13 @@ const VideoRender = (json) => {
         videoRenderer.ownerText && videoRenderer.ownerText.runs
           ? videoRenderer.ownerText.runs[0].text
           : "";
+      const publishedTimeText = videoRenderer.publishedTimeText
+        ? videoRenderer.publishedTimeText.simpleText
+        : "";
+      const viewCountText = videoRenderer.viewCountText
+        ? videoRenderer.viewCountText.simpleText
+        : "";
+
       return {
         id,
         type: "video",
@@ -376,7 +383,9 @@ const VideoRender = (json) => {
         shortBylineText,
         length: lengthText,
         isLive,
-        isShorts
+        isShorts,
+        publishedTimeText,
+        viewCountText,
       };
     } else {
       return {};
