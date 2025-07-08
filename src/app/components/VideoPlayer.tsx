@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect } from "react";
 import ReactPlayer from "react-player";
 import localStoreApi from "@/utils/localStorageApi";
@@ -33,7 +35,9 @@ export default function VideoPlayer() {
   }, []);
 
   return (
-    <div className="flex flex-col w-full h-full justify-center items-center bg-black p-4 rounded-xl shadow-gray-700 shadow-md">
+    <div className="flex flex-col w-full h-full justify-center items-center
+    bg-black p-4 rounded-xl shadow-gray-700 shadow-md
+    h-[300px] md:h-[540px] 2xl:h-[650px]">
       <ReactPlayer
         key={selectedVideo?.playlistId || selectedVideo?.id}
         className="max-w-full"
