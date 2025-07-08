@@ -41,7 +41,7 @@ export default function VideoPlayer() {
       <ReactPlayer
         key={selectedVideo?.playlistId || selectedVideo?.id}
         className="max-w-full"
-        width={loading ? `${window.innerWidth}px` : "100%"}
+        width={loading ? `${window.innerWidth}px` : "100%"} // Setting the width to screen width when loading
         height={"100%"}
         ref={playerRef}
         url={`https://www.youtube-nocookie.com/embed/${selectedVideo?.id}`} // https://www.youtube.com/embed/${selectedVideo?.id}
