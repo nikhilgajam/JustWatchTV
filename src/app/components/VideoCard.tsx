@@ -63,11 +63,11 @@ export default function VideoCard({ videoData }: { videoData: any }) {
           <div className="mt-2 text-white text-base" title={videoData?.title || "Unknown Title"}>
             {videoData?.title || "Unknown Title"}
           </div>
-          {
-            /* <div className="mt-1 text-white font-semibold text-base">
-              {videoData?.channelTitle || "Unknown Channel"}
-            </div> */
-          }
+          {videoData?.type === "video" && videoData?.publishedTimeText && (
+            <div className={`mt-1 text-sm ${selectedVideo?.id === videoData?.id ? "text-gray" : "text-gray-400"}`}>
+              {`${videoData?.channelTitle || "Unknown Channel"} • ${videoData.viewCountText || "Unknown Views"} • ${videoData.publishedTimeText || "Unknown Date"}`}
+            </div>
+          )}
         </div>
       </div>
     </div>
