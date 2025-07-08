@@ -7,7 +7,7 @@ import { useContextData } from "../context/Context";
 import { isShorts } from "@/utils/helpers";
 
 export default function VideoPlayer() {
-  const { data, selectedVideo, setSelectedVideo, playerRef } = useContextData();
+  const { data, loading, selectedVideo, setSelectedVideo, playerRef } = useContextData();
 
   useEffect(() => {
     const handleBeforeUnload = () => {
@@ -41,7 +41,7 @@ export default function VideoPlayer() {
       <ReactPlayer
         key={selectedVideo?.playlistId || selectedVideo?.id}
         className="max-w-full"
-        width={"100%"}
+        width={loading ? `${window.innerWidth}px` : "100%"}
         height={"100%"}
         ref={playerRef}
         url={`https://www.youtube-nocookie.com/embed/${selectedVideo?.id}`} // https://www.youtube.com/embed/${selectedVideo?.id}
