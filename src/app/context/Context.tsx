@@ -11,6 +11,7 @@ import { getSearchData, getPlaylists } from "@/utils/apiRequests";
 import toast from "react-hot-toast";
 import ReactPlayer from "react-player";
 import localStoreApi from "@/utils/localStorageApi";
+import { isShorts } from "@/utils/helpers";
 
 interface ContextType {
   loading: boolean;
@@ -69,12 +70,36 @@ export default function ContextProvider({ children }: { children: React.ReactNod
             response.data.items.unshift(...playlistResponse?.data?.items);
           }
 
-          setData(response.data); 
+          // Include only videos and playlists
+          response.data.items = response.data.items.filter((item: any) => {
+            if (item.type === "video" || item.type === "playlist") {
+              return true;
+            }
+            return false;
+          });
+
+          setData(response.data);
 
           // If video player is not open then set the first video as selected
           if (!isVideoPlayerOpen) {
+            let startVideo = null;
+            for (let i = 0; i < response.data?.items?.length; i++) {
+              // If the next video is a short, skip if shorts are not included
+              if (localStoreApi.getIncludeShorts() === false
+                && (response.data?.items[i]?.isShorts || isShorts(response.data?.items[i]?.length?.simpleText))) {
+                continue;
+              }
+
+              // Assign the next video data here
+              startVideo = response.data?.items[i];
+              break;
+            }
+
             setSelectedVideo({
-              id: response?.data?.items[0]?.id,
+              id: startVideo?.id,
+              title: startVideo?.title,
+              playlistId: startVideo?.playlistId,
+              type: startVideo?.type
             })
           }
 
