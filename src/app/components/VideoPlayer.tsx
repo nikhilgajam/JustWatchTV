@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import ReactPlayer from "react-player";
 import localStoreApi from "@/utils/localStorageApi";
 import { useContextData } from "../context/Context";
@@ -8,23 +8,27 @@ import { isShorts } from "@/utils/helpers";
 
 export default function VideoPlayer() {
   const { data, loading, selectedVideo, setSelectedVideo, playerRef } = useContextData();
+  const pendingSeekTime = useRef<number | null>(null);
+
+  const saveVideoMetadata = () => {
+    console.log("Saving video metadata...", selectedVideo);
+    // Save the currently playing video to local storage when the video starts
+    if (selectedVideo?.id && selectedVideo?.title) {
+      localStoreApi.addPreviouslyWatchedData({
+        id: selectedVideo.id,
+        title: selectedVideo.title,
+        playingTime: playerRef.current?.getCurrentTime() || 0,
+        playlistId: selectedVideo.playlistId || undefined,
+        index: selectedVideo.playlistId
+          ? playerRef.current?.getInternalPlayer()?.getPlaylistIndex() || 0
+          : undefined,
+      });
+    }
+  }
 
   useEffect(() => {
     const handleBeforeUnload = () => {
-      // Save video progress to local storage before the window is closed or refreshed
-      if (selectedVideo?.id && selectedVideo?.title) {
-        const selectedVideoData = {
-          id: selectedVideo.id,
-          title: selectedVideo.title,
-          playingTime: playerRef.current?.getCurrentTime() || 0,
-          playlistId: selectedVideo.playlistId || undefined,
-          index: selectedVideo.playlistId
-            ? playerRef?.current?.getInternalPlayer()?.getPlaylistIndex() || 0
-            : undefined,
-        };
-
-        localStoreApi.addPreviouslyWatchedData(selectedVideoData);
-      }
+      saveVideoMetadata(); // Save video metadata before the page unloads
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
@@ -35,40 +39,49 @@ export default function VideoPlayer() {
   }, []);
 
   return (
-    <div className="flex flex-col w-full h-full justify-center items-center
+    <div className="flex flex-col w-full justify-center items-center 
     bg-black p-4 rounded-xl shadow-gray-700 shadow-md
     h-[300px] md:h-[540px] 2xl:h-[650px]">
       <ReactPlayer
         key={selectedVideo?.playlistId || selectedVideo?.id}
         className="max-w-full"
-        width={loading ? `${window.innerWidth}px` : "100%"} // Setting the width to screen width when loading
-        height={"100%"}
         ref={playerRef}
-        url={`https://www.youtube-nocookie.com/embed/${selectedVideo?.id}`} // https://www.youtube.com/embed/${selectedVideo?.id}
+        width={loading ? `${window.innerWidth}px` : "100%"}
+        height={"100%"}
+        url={`https://www.youtube.com/embed/${selectedVideo?.id}`} // https://www.youtube-nocookie.com/embed/${selectedVideo?.id}
         controls={true}
         playing={true}
+        onPlay={() => {
+          saveVideoMetadata(); // Save video metadata when the player is playing
+        }}
         onReady={async () => {
-          // Save the currently playing video to local storage when the component mounts
-          if (selectedVideo?.id && selectedVideo?.title) {
-            localStoreApi.addPreviouslyWatchedData({
-              id: selectedVideo.id,
-              title: selectedVideo.title,
-              playingTime: playerRef.current?.getCurrentTime() || 0,
-              playlistId: selectedVideo.playlistId || undefined,
-              index: selectedVideo.playlistId
-                ? playerRef.current?.getInternalPlayer()?.getPlaylistIndex() || 0
-                : undefined,
+          const player = playerRef.current?.getInternalPlayer();
+
+          // Store the time we want to seek to
+          if (selectedVideo?.playingTime) {
+            pendingSeekTime.current = selectedVideo.playingTime;
+          }
+
+          // Set up state change listener for YouTube player
+          if (player && player.addEventListener) {
+            player.addEventListener('onStateChange', (event: any) => {
+              // State 1 means the video is playing
+              if (event.data === 1 && pendingSeekTime.current !== null) {
+                player.seekTo(pendingSeekTime.current, true);
+                pendingSeekTime.current = null; // Clear after seeking
+              }
             });
           }
 
           // If index is available, play that video in a playlist
           if (selectedVideo?.index) {
-            await playerRef.current?.getInternalPlayer()?.playVideoAt(selectedVideo.index);
-          }
-          // If playingTime is available, play from that time
-          if (selectedVideo?.playingTime) {
+            await player?.playVideoAt(selectedVideo.index);
+          } else if (selectedVideo?.playingTime && !selectedVideo?.playlistId) {
+            // For non-playlist videos, use ReactPlayer's seekTo immediately
             playerRef.current?.seekTo(selectedVideo.playingTime, "seconds");
           }
+
+          saveVideoMetadata(); // Save video metadata when the player is ready
         }}
         onEnded={() => {
           if (localStoreApi.getAutoPlay() === false)
@@ -103,11 +116,6 @@ export default function VideoPlayer() {
           youtube: {
             playerVars: {
               list: selectedVideo?.playlistId || undefined,
-              enablejsapi: 1,
-              origin: window.location.origin,
-            },
-            embedOptions: {
-              host: 'https://www.youtube-nocookie.com'
             }
           },
         }}
