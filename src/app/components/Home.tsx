@@ -46,6 +46,15 @@ export default function Home() {
       setLoading(true);
       const nextPageData = await getSearchNextPageData(data.nextPage);
       if (nextPageData?.data?.items && nextPageData.data.items.length > 0) {
+        
+        // Include only videos and playlists
+        nextPageData.data.items = nextPageData.data.items.filter((item: any) => {
+          if (item.type === "video" || item.type === "playlist") {
+            return true;
+          }
+          return false;
+        });
+
         // Append new items to the existing data
         setData((prevData: any) => ({
           ...prevData,
