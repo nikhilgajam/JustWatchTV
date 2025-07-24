@@ -11,7 +11,6 @@ export default function VideoPlayer() {
   const pendingSeekTime = useRef<number | null>(null);
 
   const saveVideoMetadata = () => {
-    console.log("Saving video metadata...", selectedVideo);
     // Save the currently playing video to local storage when the video starts
     if (selectedVideo?.id && selectedVideo?.title) {
       localStoreApi.addPreviouslyWatchedData({
