@@ -94,7 +94,7 @@ export default function Sidebar() {
   };
 
   return (
-    <div className={`mt-12 fixed top-0 left-0 h-[calc(100vh-3rem)] sm:w-[50%] md:w-[45%] xl:w-[29%] w-[100%]
+    <div className={`mt-12 fixed top-0 left-0 h-[calc(100dvh-3rem)] sm:w-[50%] md:w-[45%] xl:w-[29%] w-[100%]
       bg-gray-950 border-gray-700 sm:border-r overflow-y-scroll overflow-x-hidden px-6 py-1`}>
       <div className="space-y-2 items-center">
 

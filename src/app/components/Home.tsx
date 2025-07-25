@@ -118,7 +118,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex flex-col h-screen items-center overflow-x-hidden overflow-y-hidden outline-none">
+    <div className="flex flex-col h-dvh items-center overflow-x-hidden overflow-y-hidden outline-none">
       <div
         className="mt-[51px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 4xl:grid-cols-6
         gap-4 p-5 overflow-y-scroll overflow-x-hidden h-full outline-none"
@@ -180,7 +180,7 @@ export default function Home() {
           <Sidebar />
           :
           // Sidebar Placeholder
-          <div className="mt-12 fixed top-0 left-0 h-[calc(100vh-3rem)] sm:w-[24%] w-[100%] bg-gray-950" />
+          <div className="mt-12 fixed top-0 left-0 h-[calc(100dvh-3rem)] sm:w-[24%] w-[100%] bg-gray-950" />
         }
       </div>
 
