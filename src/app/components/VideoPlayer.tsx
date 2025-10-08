@@ -42,7 +42,7 @@ export default function VideoPlayer() {
     bg-black p-4 rounded-xl shadow-gray-700 shadow-md
     h-[300px] md:h-[540px] 2xl:h-[650px]">
       <ReactPlayer
-        key={selectedVideo?.playlistId || "video"}
+        key={selectedVideo?.playlistId || "VideoKey"}
         className="max-w-full"
         ref={playerRef}
         width={loading ? `${window.innerWidth}px` : "100%"}
